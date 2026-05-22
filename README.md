@@ -9,7 +9,7 @@ AI Automation • Neural Interfaces • Creative Coding • Hybrid Solutions Dev
 </p>
 
 <p align="center">
-<img src="https://skillicons.dev/icons?i=python,css,html,flask,django,git,mysql,vscode,photoshop,illustrator"/>
+<img src="https://skillicons.dev/icons?i=python,css,html,flask,django,git,mysql,vscode,supabase,photoshop,illustrator"/>
 </p>
 
 <p align="center">
