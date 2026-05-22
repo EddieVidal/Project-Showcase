@@ -5,7 +5,7 @@
 <h2 align="center">⚡ EDDIE // AI SYSTEMS ⚡</h2>
 
 <p align="center">
-AI Automation • Full Stack Development • Neural Interfaces • Creative Coding
+AI Automation • Neural Interfaces • Creative Coding • Hybrid Solutions Developer • Creative Software Engineer & Solution Developer
 </p>
 
 <p align="center">
