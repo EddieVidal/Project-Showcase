@@ -27,7 +27,7 @@ Building ideas into software — a collection of real-world projects, AI tools, 
 >
 > *Automates the manual process of login and product registration on a web platform — zero errors, continuous execution and fault tolerance.*
 
-[![Ver Projeto](https://img.shields.io/badge/🔗_Ver_Descrição_Completa-0d1117?style=for-the-badge&logo=github&logoColor=white)](https://EddieVidal.github.io/Project-Showcase/Automacao/Descricao.html)
+[![Ver Projeto]([![Ver Projeto](https://img.shields.io/badge/🔗_Ver_Descrição_Completa-0d1117?style=for-the-badge&logo=github&logoColor=white)](https://eddievidal.github.io/Project-Showcase/Automa%C3%A7%C3%A3o/Descri%C3%A7%C3%A3o.html))
 [![Demo](https://img.shields.io/badge/▶_Ver_Demo-161b22?style=for-the-badge&logo=github&logoColor=white)](https://github.com/EddieVidal/Project-Showcase/blob/main/Automa%C3%A7%C3%A3o/Automa%C3%A7%C3%A3o.mp4)
 
 | Tech | Descrição |
