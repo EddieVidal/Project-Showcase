@@ -1,71 +1,43 @@
 <div align="center">
 
-# ⚡ Sistema de Automação de Cadastros
+# Project-Showcase
 
-*Transformando tarefas manuais repetitivas em fluxos automatizados*  
-*Turning repetitive manual tasks into automated workflows*
-
----
+Building ideas into software — a collection of real-world projects, AI tools, automations, and experiments.
 
 ### ⚡ EDDIE // AI SYSTEMS ⚡
 
 `AI Automation` • `Desktop Software` • `Gov-Tech Solutions` • `Creative Python Developer`
 
-</div>
-
----
-
-## 🇧🇷 O que é este projeto?
-
-**O que o programa faz:** Automatiza o processo manual de login e cadastro de produtos em uma plataforma web a partir de dados estruturados em arquivos locais. Ele simula as ações humanas na interface do usuário (cliques, digitação e rolagem), incluindo mecanismos de tolerância a falhas para não interromper a execução caso ocorra um erro em um item específico.
-
-**O que ele soluciona:** Elimina o trabalho manual repetitivo, reduz drasticamente o tempo gasto em inserção de dados, anula erros humanos de digitação e garante a continuidade do processo através de logs detalhados e tratamento de exceções.
-
----
-
-## 🇺🇸 What is this project?
-
-**What it does:** Automates the manual process of login and product registration on a web platform using structured data from local files. It simulates human actions on the user interface (clicks, typing, and scrolling), with fault-tolerance mechanisms to prevent execution from stopping when an error occurs on a specific item.
-
-**What it solves:** Eliminates repetitive manual work, drastically reduces the time spent on data entry, eliminates human typing errors, and ensures process continuity through detailed logs and exception handling.
-
----
-
-## 🛠️ Tech Stack
-
-<div align="center">
-
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![PyAutoGUI](https://img.shields.io/badge/PyAutoGUI-4CAF50?style=for-the-badge&logo=python&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
-![Pyperclip](https://img.shields.io/badge/Pyperclip-E53935?style=for-the-badge&logo=python&logoColor=white)
-![Logging](https://img.shields.io/badge/Logging-F0C040?style=for-the-badge&logo=python&logoColor=black)
-![Time](https://img.shields.io/badge/Time-40B0C0?style=for-the-badge&logo=python&logoColor=white)
+![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
+![VS Code](https://img.shields.io/badge/VS%20Code-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 
 </div>
 
 ---
 
-## 📊 Destaques / Highlights
+## 📁 Projetos / Projects
 
-<div align="center">
+### ⚡ Sistema de Automação de Cadastros
 
-| | PT 🇧🇷 | EN 🇺🇸 |
-|:---:|:---|:---|
-| 🎯 | **0 erros de digitação** | **0 typing errors** |
-| ♾️ | **Registros ilimitados por lote** | **Unlimited records per batch** |
-| 🔁 | **Execução contínua 24/7** | **Continuous 24/7 execution** |
-| 🛡️ | **Tolerância a falhas integrada** | **Built-in fault tolerance** |
-| 📋 | **Logs detalhados de cada operação** | **Detailed logs for every operation** |
+> Automatiza o processo manual de login e cadastro de produtos em uma plataforma web — zero erros, execução contínua e tolerância a falhas.
+>
+> *Automates the manual process of login and product registration on a web platform — zero errors, continuous execution and fault tolerance.*
 
-</div>
+[![Ver Projeto](https://img.shields.io/badge/🔗_Ver_Descrição_Completa-0d1117?style=for-the-badge&logo=github&logoColor=white)](https://EddieVidal.github.io/Project-Showcase/Automacao/Descricao.html)
+[![Demo](https://img.shields.io/badge/▶_Ver_Demo-161b22?style=for-the-badge&logo=github&logoColor=white)](https://github.com/EddieVidal/Project-Showcase/blob/main/Automa%C3%A7%C3%A3o/Automa%C3%A7%C3%A3o.mp4)
 
----
-
-## 🎬 Demonstração / Demo
-
-> 📹 Veja o arquivo `Automação.mp4` nesta pasta para uma demonstração do sistema em execução.  
-> 📹 See the `Automação.mp4` file in this folder for a live demo of the system running.
+| Tech | Descrição |
+|------|-----------|
+| ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white) | Linguagem principal |
+| `PyAutoGUI` | Automação de interface (cliques, digitação, rolagem) |
+| `Pandas` | Leitura e manipulação dos dados de entrada |
+| `Pyperclip` | Gerenciamento da área de transferência |
+| `Logging` | Rastreamento de erros e monitoramento |
+| `Time` | Controle de intervalos e sincronização |
 
 ---
 
