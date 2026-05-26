@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Automação de Cadastros — EddieVidal</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gh-bg: #0d1117;
+      --gh-surface: #161b22;
+      --gh-surface2: #1c2128;
+      --gh-border: #30363d;
+      --gh-text: #e6edf3;
+      --gh-muted: #8b949e;
+      --gh-accent: #58a6ff;
+      --gh-orange: #f0883e;
+      --gh-green: #3fb950;
+      --gh-purple: #bc8cff;
+    }
+
+    body {
+      background: #010409;
+      color: var(--gh-text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 16px;
+    }
+
+    .page-wrap {
+      width: 100%;
+      max-width: 860px;
+    }
+
+    /* REPO HEADER BAR */
+    .repo-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      font-size: 13px;
+      color: var(--gh-muted);
+      flex-wrap: wrap;
+    }
+    .repo-bar a { color: var(--gh-accent); text-decoration: none; font-weight: 500; }
+    .repo-bar a:hover { text-decoration: underline; }
+    .repo-bar .sep { color: var(--gh-border); }
+    .repo-bar .current { color: var(--gh-text); font-weight: 600; }
+
+    /* FILE LIST */
+    .file-list {
+      background: var(--gh-surface);
+      border: 1px solid var(--gh-border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .file-list-header {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--gh-border);
+      font-size: 12px;
+      color: var(--gh-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .file-row {
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+      border-bottom: 1px solid var(--gh-border);
+      font-size: 13px;
+      gap: 10px;
+    }
+    .file-row:last-child { border-bottom: none; }
+    .file-row i { color: var(--gh-muted); font-size: 15px; }
+    .file-row .fname { color: var(--gh-accent); flex: 1; }
+    .file-row .fmsg { color: var(--gh-muted); font-size: 12px; }
+    .file-row .fdate { color: var(--gh-muted); font-size: 12px; }
+
+    /* README CARD */
+    .readme-card {
+      background: var(--gh-bg);
+      border: 1px solid var(--gh-border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .readme-topbar {
+      background: var(--gh-surface);
+      border-bottom: 1px solid var(--gh-border);
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--gh-muted);
+    }
+    .readme-topbar .label {
+      font-weight: 600;
+      color: var(--gh-text);
+      border-bottom: 2px solid #f0883e;
+      padding-bottom: 2px;
+    }
+    .readme-body {
+      padding: 44px 52px 52px;
+      text-align: center;
+    }
+
+    /* CONTENT */
+    .project-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gh-text);
+      letter-spacing: -0.5px;
+      margin-bottom: 14px;
+    }
+    .tagline {
+      font-size: 14px;
+      color: var(--gh-muted);
+      max-width: 580px;
+      margin: 0 auto 28px;
+      line-height: 1.7;
+    }
+    .author-line {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--gh-orange);
+      letter-spacing: 2.5px;
+      margin-bottom: 10px;
+    }
+    .roles {
+      font-size: 12.5px;
+      color: var(--gh-muted);
+      margin-bottom: 32px;
+      line-height: 2;
+    }
+    .divider {
+      border: none;
+      border-top: 1px solid var(--gh-border);
+      margin: 28px 0;
+    }
+
+    /* LANG TOGGLE */
+    .lang-toggle {
+      display: inline-flex;
+      background: var(--gh-surface);
+      border: 1px solid var(--gh-border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .lang-btn {
+      padding: 7px 22px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--gh-muted);
+      transition: all 0.15s;
+      font-family: 'Inter', sans-serif;
+    }
+    .lang-btn.active {
+      background: var(--gh-accent);
+      color: #0d1117;
+      border-radius: 7px;
+    }
+    .lang-btn:not(.active):hover { color: var(--gh-text); }
+
+    /* CONTENT SECTIONS */
+    .content-section { display: none; }
+    .content-section.visible { display: block; }
+
+    /* INFO GRID */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      text-align: left;
+      margin-bottom: 28px;
+    }
+    .info-card {
+      background: var(--gh-surface);
+      border: 1px solid var(--gh-border);
+      border-radius: 10px;
+      padding: 20px;
+      transition: border-color 0.15s;
+    }
+    .info-card:hover { border-color: #58a6ff55; }
+    .info-card-icon {
+      font-size: 22px;
+      margin-bottom: 10px;
+      color: var(--gh-accent);
+    }
+    .info-card-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gh-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 8px;
+    }
+    .info-card-text {
+      font-size: 13.5px;
+      color: var(--gh-text);
+      line-height: 1.7;
+    }
+    .hl-orange { color: var(--gh-orange); font-weight: 600; }
+    .hl-green  { color: var(--gh-green);  font-weight: 600; }
+    .hl-blue   { color: var(--gh-accent); font-weight: 600; }
+
+    /* COPY BLOCK */
+    .copy-block {
+      background: var(--gh-surface);
+      border: 1px solid var(--gh-border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      text-align: left;
+    }
+    .copy-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--gh-border);
+      font-size: 12px;
+      color: var(--gh-muted);
+    }
+    .copy-btn {
+      background: transparent;
+      border: 1px solid var(--gh-border);
+      color: var(--gh-muted);
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .copy-btn:hover { border-color: var(--gh-accent); color: var(--gh-accent); }
+    .copy-content {
+      padding: 18px 20px;
+      font-size: 13.5px;
+      line-height: 1.75;
+      color: var(--gh-text);
+    }
+    .copy-content p { margin-bottom: 10px; }
+    .copy-content p:last-child { margin-bottom: 0; }
+
+    /* TECH STACK */
+    .section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--gh-muted);
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 36px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid;
+      letter-spacing: 0.2px;
+    }
+    .b-python    { background:#1a2332; border-color:#306998; color:#4b9cd3; }
+    .b-pyautogui { background:#1a2a1a; border-color:#4caf50; color:#66bb6a; }
+    .b-pandas    { background:#1a1a2e; border-color:#7b68ee; color:#9b88ff; }
+    .b-pyperclip { background:#2a1a1a; border-color:#f07878; color:#ff9999; }
+    .b-logging   { background:#2a2a1a; border-color:#f0c040; color:#f5d06a; }
+    .b-time      { background:#1a2a2a; border-color:#40b0c0; color:#66ccd9; }
+
+    /* STATS */
+    .stat-row {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--gh-orange);
+      font-family: 'JetBrains Mono', monospace;
+      display: block;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: var(--gh-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* VIDEO SECTION */
+    .video-section {
+      margin-top: 32px;
+      text-align: left;
+      background: var(--gh-surface);
+      border: 1px solid var(--gh-border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .video-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gh-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .video-title i { color: var(--gh-accent); }
+    .video-desc {
+      font-size: 13.5px;
+      color: var(--gh-text);
+      line-height: 1.6;
+    }
+    .video-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+      padding: 7px 16px;
+      background: transparent;
+      border: 1px solid var(--gh-border);
+      border-radius: 7px;
+      color: var(--gh-accent);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .video-link:hover { background: var(--gh-surface2); border-color: var(--gh-accent); }
+
+    /* FOOTER */
+    .footer {
+      text-align: center;
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--gh-muted);
+      padding-top: 20px;
+      border-top: 1px solid var(--gh-border);
+    }
+    .footer a { color: var(--gh-accent); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .readme-body { padding: 28px 20px 36px; }
+      .info-grid { grid-template-columns: 1fr; }
+      .stat-row { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- REPO BREADCRUMB -->
+  <div class="repo-bar">
+    <i class="ti ti-brand-github"></i>
+    <a href="#">EddieVidal</a>
+    <span class="sep">/</span>
+    <a href="#">Project-Showcase</a>
+    <span class="sep">/</span>
+    <span class="current">Automação</span>
+    <span class="sep">/</span>
+    <span>Descrição.html</span>
+  </div>
+
+  <!-- FILE LIST MOCKUP -->
+  <div class="file-list">
+    <div class="file-list-header">
+      <i class="ti ti-git-commit" style="font-size:14px"></i>
+      <span>EddieVidal</span>
+      <span style="color:var(--gh-text)">Add project description</span>
+      <span style="margin-left:auto">now</span>
+    </div>
+    <div class="file-row">
+      <i class="ti ti-folder" style="color:#58a6ff"></i>
+      <span class="fname">..</span>
+    </div>
+    <div class="file-row">
+      <i class="ti ti-file-filled" style="color:#e06c75"></i>
+      <span class="fname">Automação.mp4</span>
+      <span class="fmsg">Add demo video</span>
+      <span class="fdate" style="margin-left:auto">now</span>
+    </div>
+    <div class="file-row">
+      <i class="ti ti-file-filled" style="color:#f0883e"></i>
+      <span class="fname">Descrição.html</span>
+      <span class="fmsg">Add project description</span>
+      <span class="fdate" style="margin-left:auto">now</span>
+    </div>
+  </div>
+
+  <!-- README CARD -->
+  <div class="readme-card">
+    <div class="readme-topbar">
+      <i class="ti ti-book" style="font-size:15px"></i>
+      <span class="label">README</span>
+    </div>
+
+    <div class="readme-body">
+      <div class="project-title">⚡ Sistema de Automação de Cadastros ⚡</div>
+      <p class="tagline">Transformando tarefas manuais repetitivas em fluxos automatizados —<br>precisão, velocidade e zero erros de digitação.</p>
+
+      <div class="author-line">⚡ EDDIE // AI SYSTEMS ⚡</div>
+      <p class="roles">
+        AI Automation &nbsp;•&nbsp; Desktop Software &nbsp;•&nbsp;
+        Gov-Tech Solutions &nbsp;•&nbsp; Creative Python Developer
+      </p>
+
+      <hr class="divider">
+
+      <!-- LANG TOGGLE -->
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('pt')">🇧🇷 Português</button>
+        <button class="lang-btn" onclick="setLang('en')">🇺🇸 English</button>
+      </div>
+
+      <!-- PT -->
+      <div class="content-section visible" id="content-pt">
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-card-icon"><i class="ti ti-robot"></i></div>
+            <div class="info-card-title">O que o programa faz</div>
+            <div class="info-card-text">
+              Automatiza o processo manual de <span class="hl-orange">login e cadastro de produtos</span> em uma plataforma web a partir de dados estruturados em arquivos locais. Simula ações humanas na interface (cliques, digitação e rolagem), incluindo <span class="hl-green">tolerância a falhas</span> para garantir a continuidade mesmo em caso de erros pontuais.
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon"><i class="ti ti-shield-check"></i></div>
+            <div class="info-card-title">O que ele soluciona</div>
+            <div class="info-card-text">
+              Elimina o <span class="hl-orange">trabalho manual repetitivo</span>, reduz drasticamente o tempo de inserção de dados, anula erros humanos de digitação e garante a continuidade do processo através de <span class="hl-blue">logs detalhados</span> e tratamento de exceções.
+            </div>
+          </div>
+        </div>
+
+        <div class="copy-block">
+          <div class="copy-topbar">
+            <span>📋 Texto para copiar — LinkedIn (PT)</span>
+            <button class="copy-btn" onclick="copyText('pt')">
+              <i class="ti ti-copy" style="font-size:13px"></i> Copiar
+            </button>
+          </div>
+          <div class="copy-content" id="text-pt">
+            <p>🤖 <strong>Sistema de Automação de Cadastros</strong></p>
+            <p>Automatiza o processo manual de login e cadastro de produtos em uma plataforma web a partir de dados estruturados em arquivos locais. O sistema simula as ações humanas na interface do usuário (cliques, digitação e rolagem), incluindo mecanismos de tolerância a falhas para não interromper a execução caso ocorra um erro em um item específico.</p>
+            <p>✅ <strong>Problema resolvido:</strong> Elimina o trabalho manual repetitivo, reduz drasticamente o tempo gasto em inserção de dados, anula erros humanos de digitação e garante a continuidade do processo através de logs detalhados e tratamento de exceções.</p>
+            <p>🛠️ <strong>Tecnologias:</strong> Python · PyAutoGUI · Pandas · Pyperclip · Logging · Time</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="content-section" id="content-en">
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-card-icon"><i class="ti ti-robot"></i></div>
+            <div class="info-card-title">What it does</div>
+            <div class="info-card-text">
+              Automates the manual process of <span class="hl-orange">login and product registration</span> on a web platform using structured data from local files. Simulates human actions on the UI (clicks, typing, and scrolling), with built-in <span class="hl-green">fault tolerance</span> to keep the process running even if individual items fail.
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon"><i class="ti ti-shield-check"></i></div>
+            <div class="info-card-title">What it solves</div>
+            <div class="info-card-text">
+              Eliminates <span class="hl-orange">repetitive manual work</span>, drastically reduces data entry time, eliminates human typing errors and ensures process continuity through <span class="hl-blue">detailed logs</span> and exception handling.
+            </div>
+          </div>
+        </div>
+
+        <div class="copy-block">
+          <div class="copy-topbar">
+            <span>📋 Copy text — LinkedIn (EN)</span>
+            <button class="copy-btn" onclick="copyText('en')">
+              <i class="ti ti-copy" style="font-size:13px"></i> Copy
+            </button>
+          </div>
+          <div class="copy-content" id="text-en">
+            <p>🤖 <strong>Registration Automation System</strong></p>
+            <p>Automates the manual process of login and product registration on a web platform using structured data from local files. The system simulates human actions on the user interface (clicks, typing, and scrolling), with fault-tolerance mechanisms to prevent execution from stopping when an error occurs on a specific item.</p>
+            <p>✅ <strong>Problem solved:</strong> Eliminates repetitive manual work, drastically reduces the time spent on data entry, eliminates human typing errors, and ensures process continuity through detailed logs and exception handling.</p>
+            <p>🛠️ <strong>Tech stack:</strong> Python · PyAutoGUI · Pandas · Pyperclip · Logging · Time</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- TECH STACK -->
+      <div class="section-label">Tech Stack</div>
+      <div class="badges">
+        <span class="badge b-python"><i class="ti ti-brand-python" style="font-size:16px"></i> Python</span>
+        <span class="badge b-pyautogui"><i class="ti ti-cursor" style="font-size:16px"></i> PyAutoGUI</span>
+        <span class="badge b-pandas"><i class="ti ti-table" style="font-size:16px"></i> Pandas</span>
+        <span class="badge b-pyperclip"><i class="ti ti-clipboard" style="font-size:16px"></i> Pyperclip</span>
+        <span class="badge b-logging"><i class="ti ti-file-description" style="font-size:16px"></i> Logging</span>
+        <span class="badge b-time"><i class="ti ti-clock" style="font-size:16px"></i> Time</span>
+      </div>
+
+      <!-- STATS -->
+      <div class="stat-row">
+        <div class="stat">
+          <span class="stat-num">0</span>
+          <div class="stat-label">Erros de digitação</div>
+        </div>
+        <div class="stat">
+          <span class="stat-num">∞</span>
+          <div class="stat-label">Registros por lote</div>
+        </div>
+        <div class="stat">
+          <span class="stat-num">24/7</span>
+          <div class="stat-label">Execução contínua</div>
+        </div>
+        <div class="stat">
+          <span class="stat-num">✓</span>
+          <div class="stat-label">Fault tolerant</div>
+        </div>
+      </div>
+
+      <!-- VIDEO -->
+      <div class="video-section">
+        <div class="video-title">
+          <i class="ti ti-player-play-filled"></i>
+          Demonstração / Demo
+        </div>
+        <p class="video-desc">
+          Veja o sistema em execução — automação completa do fluxo de login e cadastro.<br>
+          <em style="color:var(--gh-muted)">See the system in action — full automation of the login and registration flow.</em>
+        </p>
+        <a href="Automação.mp4" class="video-link">
+          <i class="ti ti-player-play" style="font-size:15px"></i>
+          Assistir demonstração / Watch demo
+        </a>
+      </div>
+
+      <div class="footer">
+        Desenvolvido por <a href="https://github.com/EddieVidal">EddieVidal</a> &nbsp;—&nbsp; Tanguá, RJ, Brasil 🇧🇷
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function setLang(lang) {
+    document.getElementById('content-pt').classList.toggle('visible', lang === 'pt');
+    document.getElementById('content-en').classList.toggle('visible', lang === 'en');
+    const btns = document.querySelectorAll('.lang-btn');
+    btns[0].classList.toggle('active', lang === 'pt');
+    btns[1].classList.toggle('active', lang === 'en');
+  }
+
+  function copyText(lang) {
+    const el = document.getElementById('text-' + lang);
+    navigator.clipboard.writeText(el.innerText).then(() => {
+      const section = document.getElementById('content-' + lang);
+      const btn = section.querySelector('.copy-btn');
+      btn.innerHTML = '<i class="ti ti-check" style="font-size:13px;color:#3fb950"></i> Copiado!';
+      setTimeout(() => {
+        btn.innerHTML = '<i class="ti ti-copy" style="font-size:13px"></i> ' + (lang === 'pt' ? 'Copiar' : 'Copy');
+      }, 2000);
+    });
+  }
+</script>
+</body>
+</html>
